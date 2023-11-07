@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
+    "lint:prettier": "prettier --check .",
+    "lint": "yarn lint:js && yarn lint:prettier",
+    "lintfix": "prettier --write --list-different . && yarn lint:js --fix"
+  },
+  "devDependencies": {
+    "@invictus.codes/nuxt-vuetify": "0.2.20",
+    "@nuxtjs/eslint-config-typescript": "12.0.0",
+    "@nuxtjs/eslint-module": "4.1.0",
+    "@types/node": "20.3.2",
+    "@typescript-eslint/parser": "5.60.1",
+    "eslint": "8.43.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "nuxt": "3.6.1",
+    "prettier": "2.8.8",
+    "typescript": "5.1.6",
+    "vuetify": "3.3.6"
+  },
+  "dependencies": {
+    "@mdi/font": "7.2.96",
+    "@pinia/nuxt": "0.4.11",
+    "sass": "1.63.6"
+  }
+}

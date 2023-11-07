@@ -1,0 +1,52 @@
+version: "3"
+services:
+  database:
+    image: "postgres:15.3-bullseye"
+    container_name: "template-database"
+    restart: "unless-stopped"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $SQL_USER"]
+    environment:
+      - "POSTGRES_USER=$SQL_USER"
+      - "POSTGRES_PASSWORD=$SQL_PSWD"
+      - "POSTGRES_DB=$SQL_DATABASE"
+    networks:
+      - "main"
+    ports:
+      - "$SQL_PORT:5432"
+    volumes:
+      - "./database/data:/var/lib/postgresql/data"
+      - "./database/initdb:/docker-entrypoint-initdb.d"
+
+  backend:
+    build:
+      context: "./backend"
+      dockerfile: "dev.Dockerfile"
+    restart: "unless-stopped"
+    container_name: "template-backend"
+    environment:
+      - "DEBUG=$BACKEND_DEBUG"
+      - "HOST=$BACKEND_HOST"
+      - "PORT=$BACKEND_PORT"
+    ports:
+      - "$BACKEND_PORT:$BACKEND_PORT"
+    volumes:
+      - "./backend:/srv/app"
+
+  frontend:
+    build:
+      context: "./frontend"
+      dockerfile: "dev.Dockerfile"
+    restart: "unless-stopped"
+    container_name: "template-frontend"
+    environment:
+      - "HOST=$FRONTEND_HOST"
+      - "PORT=$FRONTEND_PORT"
+      - "NUXT_PUBLIC_BASE_URL=$BASE_URL"
+    ports:
+      - "$FRONTEND_PORT:$FRONTEND_PORT"
+    volumes:
+      - "./frontend:/srv/app"
+
+networks:
+  main:
