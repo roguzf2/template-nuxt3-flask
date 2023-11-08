@@ -45,6 +45,7 @@ services:
       - "NUXT_PUBLIC_BASE_URL=$BASE_URL"
     ports:
       - "$FRONTEND_PORT:$FRONTEND_PORT"
+      - "24678:24678" # NUXT HMR DEV PORT
     volumes:
       - "./frontend:/srv/app"
 

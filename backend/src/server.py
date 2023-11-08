@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 # Local imports
 from src.blueprints.api import api_bp
+from src.blueprints.test import test
 
 # Server instantiation and configuration
 server = Flask(__name__)
@@ -15,6 +16,10 @@ CORS(server)
 server.register_blueprint(
     api_bp,
     url_prefix="/api"
+)
+server.register_blueprint(
+    test,
+    url_prefix="/"
 )
 
 @server.get("/")
