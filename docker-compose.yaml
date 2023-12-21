@@ -10,13 +10,13 @@ services:
       - "POSTGRES_USER=$SQL_USER"
       - "POSTGRES_PASSWORD=$SQL_PSWD"
       - "POSTGRES_DB=$SQL_DATABASE"
-    networks:
-      - "main"
     ports:
       - "$SQL_PORT:5432"
     volumes:
       - "./database/data:/var/lib/postgresql/data"
       - "./database/initdb:/docker-entrypoint-initdb.d"
+    networks:
+      - "main"
 
   backend:
     build:
@@ -25,6 +25,11 @@ services:
     restart: "unless-stopped"
     container_name: "template-backend"
     environment:
+      - "SQL_HOST=$SQL_HOST"
+      - "SQL_PORT=$SQL_PORT"
+      - "SQL_USER=$SQL_USER"
+      - "SQL_PSWD=$SQL_PSWD"
+      - "SQL_DATABASE=$SQL_DATABASE"
       - "DEBUG=$BACKEND_DEBUG"
       - "HOST=$BACKEND_HOST"
       - "PORT=$BACKEND_PORT"
@@ -32,6 +37,8 @@ services:
       - "$BACKEND_PORT:$BACKEND_PORT"
     volumes:
       - "./backend:/srv/app"
+    networks:
+      - "main"
 
   frontend:
     build:
@@ -48,6 +55,8 @@ services:
       - "24678:24678" # NUXT HMR DEV PORT
     volumes:
       - "./frontend:/srv/app"
+    networks:
+      - "main"
 
 networks:
   main:
